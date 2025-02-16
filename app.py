@@ -14,6 +14,7 @@ load_dotenv()
 app = FastAPI()
 
 AIPROXY_TOKEN = os.getenv("AIPROXY_TOKEN")
+
 # Function to interact with the LLM
 def ask_llm(prompt: str) -> str:
     headers = {
@@ -82,10 +83,6 @@ def fetch_data_from_api(api_url: str, output_path: str):
     with open(output_path, 'w') as file:
         file.write(response.text)
 
-
-@app.get("/root")
-async def read_file(path: str = Query(None, description="Path of the file to read")):
-    return {"content": 123}
 
 @app.post("/run")
 async def run_task(task: str = Query(..., description="The task to execute")):
